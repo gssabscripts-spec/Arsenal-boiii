@@ -126,7 +126,7 @@ gui.DisplayOrder=50;gui.Parent=me:WaitForChild("PlayerGui")
 local purple=Color3.fromRGB(145,70,255)
 local panel=Color3.fromRGB(25,25,32)
 local off=Color3.fromRGB(38,38,48)
-local aim,esp,infiniteJump=false,false,false
+local aim,esp=false,false
 local radius,smoothness=150,0.18
 local highlights={}
 
@@ -194,7 +194,6 @@ end
 
 toggle("Aim Assist",82,function(v) aim=v end)
 toggle("Player Highlights",124,function(v) esp=v end)
-toggle("Infinite Jump",166,function(v) infiniteJump=v end)
 
 local function makeLabel(text,y)
  local l=Instance.new("TextLabel",main)
@@ -365,24 +364,5 @@ Run.RenderStepped:Connect(function()
     highlights[p]=nil
    end
   end
- end
-end)
-
--- IMPROVED INFINITE JUMP
-UIS.JumpRequest:Connect(function()
- if not infiniteJump then return end
-
- local ch=me.Character
- local hum=ch and ch:FindFirstChildOfClass("Humanoid")
- local root=ch and ch:FindFirstChild("HumanoidRootPart")
-
- if hum and root and hum.Health>0 then
-  hum:ChangeState(Enum.HumanoidStateType.Jumping)
-
-  root.AssemblyLinearVelocity=Vector3.new(
-   root.AssemblyLinearVelocity.X,
-   math.max(root.AssemblyLinearVelocity.Y,hum.JumpPower),
-   root.AssemblyLinearVelocity.Z
-  )
  end
 end)
