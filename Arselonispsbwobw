@@ -1,0 +1,388 @@
+
+--==================================================
+-- GSSAB COMMUNITY INTRO
+--==================================================
+
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+
+local me = Players.LocalPlayer
+local playerGui = me:WaitForChild("PlayerGui")
+
+local introGui = Instance.new("ScreenGui")
+introGui.Name = "GSSABIntro"
+introGui.IgnoreGuiInset = true
+introGui.ResetOnSpawn = false
+introGui.DisplayOrder = 100
+introGui.Parent = playerGui
+
+local introBG = Instance.new("Frame")
+introBG.Size = UDim2.fromScale(1, 1)
+introBG.BackgroundColor3 = Color3.fromRGB(12, 8, 20)
+introBG.BorderSizePixel = 0
+introBG.Parent = introGui
+
+local introTitle = Instance.new("TextLabel")
+introTitle.AnchorPoint = Vector2.new(0.5, 0.5)
+introTitle.Position = UDim2.fromScale(0.5, 0.44)
+introTitle.Size = UDim2.new(0.9, 0, 0, 90)
+introTitle.BackgroundTransparency = 1
+introTitle.Text = "Made By The GSSAB Community!"
+introTitle.TextColor3 = Color3.fromRGB(210, 165, 255)
+introTitle.TextTransparency = 1
+introTitle.TextScaled = true
+introTitle.Font = Enum.Font.GothamBold
+introTitle.Parent = introBG
+
+local textConstraint = Instance.new("UITextSizeConstraint")
+textConstraint.MaxTextSize = 40
+textConstraint.MinTextSize = 14
+textConstraint.Parent = introTitle
+
+local introLine = Instance.new("Frame")
+introLine.AnchorPoint = Vector2.new(0.5, 0.5)
+introLine.Position = UDim2.fromScale(0.5, 0.54)
+introLine.Size = UDim2.new(0, 0, 0, 3)
+introLine.BackgroundColor3 = Color3.fromRGB(145, 70, 255)
+introLine.BorderSizePixel = 0
+introLine.Parent = introBG
+
+local lineCorner = Instance.new("UICorner")
+lineCorner.CornerRadius = UDim.new(1, 0)
+lineCorner.Parent = introLine
+
+local introSubtitle = Instance.new("TextLabel")
+introSubtitle.AnchorPoint = Vector2.new(0.5, 0.5)
+introSubtitle.Position = UDim2.fromScale(0.5, 0.62)
+introSubtitle.Size = UDim2.new(0.9, 0, 0, 30)
+introSubtitle.BackgroundTransparency = 1
+introSubtitle.Text = "WELCOME TO GSSAB"
+introSubtitle.TextColor3 = Color3.fromRGB(230, 220, 245)
+introSubtitle.TextTransparency = 1
+introSubtitle.TextScaled = true
+introSubtitle.Font = Enum.Font.GothamMedium
+introSubtitle.Parent = introBG
+
+TweenService:Create(
+    introTitle,
+    TweenInfo.new(1),
+    {TextTransparency = 0}
+):Play()
+
+TweenService:Create(
+    introSubtitle,
+    TweenInfo.new(1.2),
+    {TextTransparency = 0}
+):Play()
+
+TweenService:Create(
+    introLine,
+    TweenInfo.new(0.8, Enum.EasingStyle.Quint),
+    {Size = UDim2.new(0.3, 0, 0, 3)}
+):Play()
+
+task.wait(2.5)
+
+local fadeInfo = TweenInfo.new(0.7)
+
+TweenService:Create(
+    introBG,
+    fadeInfo,
+    {BackgroundTransparency = 1}
+):Play()
+
+TweenService:Create(
+    introTitle,
+    fadeInfo,
+    {TextTransparency = 1}
+):Play()
+
+TweenService:Create(
+    introSubtitle,
+    fadeInfo,
+    {TextTransparency = 1}
+):Play()
+
+TweenService:Create(
+    introLine,
+    fadeInfo,
+    {BackgroundTransparency = 1}
+):Play()
+
+task.wait(0.75)
+introGui:Destroy()
+
+--==================================================
+-- ORIGINAL GSSAB SCRIPT
+--==================================================
+
+local UIS=game:GetService("UserInputService")
+local Run=game:GetService("RunService")
+
+local gui=Instance.new("ScreenGui")
+gui.Name="GSSAB";gui.ResetOnSpawn=false;gui.IgnoreGuiInset=true
+gui.DisplayOrder=50;gui.Parent=me:WaitForChild("PlayerGui")
+
+local purple=Color3.fromRGB(145,70,255)
+local panel=Color3.fromRGB(25,25,32)
+local off=Color3.fromRGB(38,38,48)
+local aim,esp,infiniteJump=false,false,false
+local radius,smoothness=150,0.18
+local highlights={}
+
+local function corner(o,r)
+ local c=Instance.new("UICorner",o);c.CornerRadius=UDim.new(0,r or 8)
+end
+
+local function stroke(o,color)
+ local s=Instance.new("UIStroke",o);s.Color=color or purple;s.Thickness=1
+end
+
+-- FOV CIRCLE
+local circle=Instance.new("Frame",gui)
+circle.Name="FOV";circle.AnchorPoint=Vector2.new(.5,.5)
+circle.Position=UDim2.fromScale(.5,.5)
+circle.Size=UDim2.fromOffset(radius*2,radius*2)
+circle.BackgroundTransparency=1;circle.ZIndex=1
+corner(circle,500);stroke(circle)
+
+-- MAIN WINDOW
+local main=Instance.new("Frame",gui)
+main.Size=UDim2.fromOffset(300,430)
+main.Position=UDim2.new(0,35,.2,0)
+main.BackgroundColor3=panel;main.BorderSizePixel=0;main.ZIndex=5
+corner(main,12);stroke(main,Color3.fromRGB(65,65,80))
+
+local header=Instance.new("TextButton",main)
+header.Size=UDim2.new(1,0,0,50)
+header.BackgroundColor3=Color3.fromRGB(32,29,42)
+header.Text="  ◈  GSSAB  |  COMMUNITY"
+header.TextColor3=Color3.new(1,1,1)
+header.TextXAlignment=Enum.TextXAlignment.Left
+header.Font=Enum.Font.GothamBold;header.TextSize=14
+header.ZIndex=6;header.AutoButtonColor=false;corner(header,12)
+
+local sub=Instance.new("TextLabel",main)
+sub.Position=UDim2.new(0,14,0,53)
+sub.Size=UDim2.new(1,-28,0,20)
+sub.BackgroundTransparency=1;sub.Text="PLAYER SETTINGS"
+sub.TextColor3=purple;sub.Font=Enum.Font.GothamBold
+sub.TextSize=10;sub.TextXAlignment=Enum.TextXAlignment.Left
+sub.ZIndex=6
+
+local function button(text,y,callback)
+ local b=Instance.new("TextButton",main)
+ b.Size=UDim2.new(1,-24,0,36);b.Position=UDim2.new(0,12,0,y)
+ b.BackgroundColor3=off;b.TextColor3=Color3.new(1,1,1)
+ b.Text=text;b.Font=Enum.Font.GothamMedium;b.TextSize=12
+ b.AutoButtonColor=true;b.ZIndex=7;corner(b,8)
+ b.Activated:Connect(callback)
+ return b
+end
+
+local function toggle(name,y,callback)
+ local state=false
+ local b
+ b=button(name.."   [OFF]",y,function()
+  state=not state
+  b.Text=name..(state and "   [ON]" or "   [OFF]")
+  b.BackgroundColor3=state and Color3.fromRGB(75,42,115) or off
+  callback(state)
+ end)
+ return b
+end
+
+toggle("Aim Assist",82,function(v) aim=v end)
+toggle("Player Highlights",124,function(v) esp=v end)
+toggle("Infinite Jump",166,function(v) infiniteJump=v end)
+
+local function makeLabel(text,y)
+ local l=Instance.new("TextLabel",main)
+ l.Position=UDim2.new(0,14,0,y);l.Size=UDim2.new(1,-28,0,20)
+ l.BackgroundTransparency=1;l.Text=text
+ l.TextColor3=Color3.fromRGB(210,195,230)
+ l.Font=Enum.Font.GothamBold;l.TextSize=11
+ l.TextXAlignment=Enum.TextXAlignment.Left;l.ZIndex=6
+ return l
+end
+
+local function makeInput(y,default,placeholder)
+ local b=Instance.new("TextBox",main)
+ b.Position=UDim2.new(0,12,0,y);b.Size=UDim2.new(1,-24,0,32)
+ b.BackgroundColor3=off;b.TextColor3=Color3.new(1,1,1)
+ b.Text=default;b.PlaceholderText=placeholder
+ b.ClearTextOnFocus=false;b.Font=Enum.Font.Gotham
+ b.TextSize=12;b.ZIndex=7;corner(b,8)
+ return b
+end
+
+local fovLabel=makeLabel("FOV RADIUS  •  "..radius.." px",211)
+local fovBox=makeInput(234,tostring(radius),"Radius 40–500")
+
+fovBox.FocusLost:Connect(function()
+ local n=tonumber(fovBox.Text)
+ if n then radius=math.clamp(math.floor(n),40,500) end
+ fovBox.Text=tostring(radius)
+ fovLabel.Text="FOV RADIUS  •  "..radius.." px"
+ circle.Size=UDim2.fromOffset(radius*2,radius*2)
+end)
+
+local smoothLabel=makeLabel("AIM SMOOTHNESS  •  "..smoothness,276)
+local smoothBox=makeInput(299,tostring(smoothness),"Value 0.05–1.00")
+
+smoothBox.FocusLost:Connect(function()
+ local n=tonumber(smoothBox.Text)
+ if n then smoothness=math.clamp(n,0.05,1) end
+ smoothBox.Text=tostring(smoothness)
+ smoothLabel.Text="AIM SMOOTHNESS  •  "..smoothness
+end)
+
+button("HIDE MENU  [RightShift]",348,function()
+ main.Visible=false
+end)
+
+-- REOPEN BUTTON
+local reopen=Instance.new("TextButton",gui)
+reopen.Name="ReopenMenu";reopen.Size=UDim2.fromOffset(48,48)
+reopen.Position=UDim2.new(0,16,.5,-24)
+reopen.Text="G";reopen.TextColor3=Color3.new(1,1,1)
+reopen.BackgroundColor3=Color3.fromRGB(100,45,155)
+reopen.Font=Enum.Font.GothamBold;reopen.TextSize=20
+reopen.ZIndex=20;corner(reopen,24);reopen.Visible=false
+
+reopen.Activated:Connect(function()
+ main.Visible=true
+end)
+
+main:GetPropertyChangedSignal("Visible"):Connect(function()
+ reopen.Visible=not main.Visible
+end)
+
+UIS.InputBegan:Connect(function(i,g)
+ if not g and i.KeyCode==Enum.KeyCode.RightShift then
+  main.Visible=not main.Visible
+ end
+end)
+
+-- DRAG WINDOW
+local dragging,start,pos
+
+header.InputBegan:Connect(function(i)
+ if i.UserInputType==Enum.UserInputType.MouseButton1
+ or i.UserInputType==Enum.UserInputType.Touch then
+  dragging=true;start=i.Position;pos=main.Position
+ end
+end)
+
+UIS.InputChanged:Connect(function(i)
+ if dragging and (i.UserInputType==Enum.UserInputType.MouseMovement
+ or i.UserInputType==Enum.UserInputType.Touch) then
+  local d=i.Position-start
+  main.Position=UDim2.new(pos.X.Scale,pos.X.Offset+d.X,
+   pos.Y.Scale,pos.Y.Offset+d.Y)
+ end
+end)
+
+UIS.InputEnded:Connect(function(i)
+ if i.UserInputType==Enum.UserInputType.MouseButton1
+ or i.UserInputType==Enum.UserInputType.Touch then
+  dragging=false
+ end
+end)
+
+-- AIM ASSIST + FOV
+Run.RenderStepped:Connect(function()
+ local cam=workspace.CurrentCamera
+ if not cam then return end
+
+ circle.Position=UDim2.fromOffset(
+  cam.ViewportSize.X/2,
+  cam.ViewportSize.Y/2
+ )
+ circle.Size=UDim2.fromOffset(radius*2,radius*2)
+
+ if aim then
+  local center=Vector2.new(
+   cam.ViewportSize.X/2,
+   cam.ViewportSize.Y/2
+  )
+
+  local target,best=nil,radius
+
+  for _,p in ipairs(Players:GetPlayers()) do
+   local eligible=p~=me and p.Character
+
+   if eligible and me.Team~=nil and p.Team==me.Team then
+    eligible=false
+   end
+
+   if eligible then
+    local h=p.Character:FindFirstChild("Head")
+    local hum=p.Character:FindFirstChildOfClass("Humanoid")
+
+    if h and hum and hum.Health>0 then
+     local v,visible=cam:WorldToViewportPoint(h.Position)
+
+     if visible and v.Z>0 then
+      local d=(Vector2.new(v.X,v.Y)-center).Magnitude
+
+      if d<=radius and d<best then
+       target=h
+       best=d
+      end
+     end
+    end
+   end
+  end
+
+  if target then
+   cam.CFrame=cam.CFrame:Lerp(
+    CFrame.lookAt(cam.CFrame.Position,target.Position),
+    smoothness
+   )
+  end
+ end
+
+ -- PLAYER HIGHLIGHTS
+ for _,p in ipairs(Players:GetPlayers()) do
+  if p~=me then
+   local ch=p.Character
+   local h=highlights[p]
+
+   if esp and ch then
+    if not h or h.Parent~=ch then
+     if h then h:Destroy() end
+
+     h=Instance.new("Highlight")
+     h.FillColor=purple
+     h.OutlineColor=Color3.new(1,1,1)
+     h.FillTransparency=.6
+     h.Parent=ch
+     highlights[p]=h
+    end
+   elseif h then
+    h:Destroy()
+    highlights[p]=nil
+   end
+  end
+ end
+end)
+
+-- IMPROVED INFINITE JUMP
+UIS.JumpRequest:Connect(function()
+ if not infiniteJump then return end
+
+ local ch=me.Character
+ local hum=ch and ch:FindFirstChildOfClass("Humanoid")
+ local root=ch and ch:FindFirstChild("HumanoidRootPart")
+
+ if hum and root and hum.Health>0 then
+  hum:ChangeState(Enum.HumanoidStateType.Jumping)
+
+  root.AssemblyLinearVelocity=Vector3.new(
+   root.AssemblyLinearVelocity.X,
+   math.max(root.AssemblyLinearVelocity.Y,hum.JumpPower),
+   root.AssemblyLinearVelocity.Z
+  )
+ end
+end)
